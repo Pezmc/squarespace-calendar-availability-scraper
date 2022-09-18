@@ -3,7 +3,7 @@ name: Scrape and Notify
 on:
   # Triggers the workflow every 5 minutes
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: '*/1 * * * *'
 
 jobs:
   # This workflow contains a single job called "cron"
@@ -15,4 +15,15 @@ jobs:
     steps:
       - uses: volta-cli/action@v3
       - run: yarn install
-      - run: yarn start
+      - env:
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+
+          CALENDAR_URL: ${{ secrets.CALENDAR_URL }}
+
+          CALENDAR_OWNER: ${{ secrets.CALENDAR_OWNER }}
+          CALENDAR_ID: ${{ secrets.CALENDAR_ID }}
+
+          APPOINTMENT_TYPE: ${{ secrets.APPOINTMENT_TYPE }}
+
+        run: yarn start
