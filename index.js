@@ -124,6 +124,12 @@ const compareAvailability = (previousAvailabilities = [], newAvailabilities = []
     }),
   )
 
+  console.log('= Previous Availability')
+  console.log(previousByDate)
+
+  console.log('= New Availability')
+  console.log(newByDate)
+
   const newlyAvailableDates = []
 
   for (const [previousDate, previousAvailability] of previousByDate) {
@@ -169,9 +175,9 @@ const main = async () => {
     ...(await getAvailability(appointmentTypes, dayjs().add(3, 'month'))),
   ]
 
-  console.info(`= Current Availability =`, newAvailability)
-
   const newlyAvailableDates = compareAvailability(previousAvailability, newAvailability)
+
+  console.log(`Newly available dates: ${newlyAvailableDates}`)
 
   writeState(newAvailability)
 
