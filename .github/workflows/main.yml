@@ -36,11 +36,6 @@ jobs:
 
           APPOINTMENT_TYPE: ${{ secrets.APPOINTMENT_TYPE }}
 
-        run: yarn start
+          STATE_FILE: '.state/PREVIOUS_AVAILABILITY.json'
 
-      - name: Upload previous state artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: previous-state
-          path: PREVIOUS_STATE.json
-          retention-days: 7
+        run: yarn start
