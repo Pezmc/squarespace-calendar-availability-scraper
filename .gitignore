@@ -3,6 +3,7 @@ sessions/
 .DS_Store
 nodemon
 .env
+.state
 
 # Yarn
 .yarn/*
