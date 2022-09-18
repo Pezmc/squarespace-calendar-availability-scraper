@@ -111,7 +111,7 @@ const writeState = (newAvailability) => {
   }
 }
 
-const compareAvailability = (previousAvailabilities, newAvailabilities) => {
+const compareAvailability = (previousAvailabilities = [], newAvailabilities = []) => {
   const previousByDate = new Map(
     previousAvailabilities.map((day) => {
       return [day.date, day.available]
