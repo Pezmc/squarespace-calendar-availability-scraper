@@ -5,8 +5,6 @@ const dayjs = require('dayjs')
 const fs = require('fs')
 const Pushover = require('pushover-notifications')
 
-const STATE_FILE = 'PREVIOUS_STATE.json'
-
 const requireEnvs = (names) => {
   const missing = []
 
@@ -97,9 +95,19 @@ const sendNotification = (message, title) => {
 
 const loadState = () => {
   try {
-    return JSON.parse(fs.readFileSync(STATE_FILE, { encoding: 'utf8', flag: 'r' }))
+    return JSON.parse(fs.readFileSync(process.env.STATE_FILE, { encoding: 'utf8', flag: 'r' }))
   } catch (error) {
     console.warn('No saved state found, loading new availability')
+  }
+}
+
+const writeState = (newAvailability) => {
+  try {
+    const fileName = process.env.STATE_FILE
+    fs.writeFileSync(fileName, JSON.stringify(newAvailability, null, 2))
+    console.log(`Availability saved to ${fileName}.`)
+  } catch (error) {
+    console.warn('Availability could not be written to disk.', error)
   }
 }
 
@@ -148,6 +156,7 @@ const main = async () => {
     'CALENDAR_OWNER',
     'CALENDAR_ID',
     'APPOINTMENT_TYPE',
+    'STATE_FILE',
   ])
 
   const previousAvailability = loadState()
@@ -164,12 +173,7 @@ const main = async () => {
 
   const newlyAvailableDates = compareAvailability(previousAvailability, newAvailability)
 
-  try {
-    fs.writeFileSync(STATE_FILE, JSON.stringify(newAvailability, null, 2))
-    console.log('Availability saved.')
-  } catch (error) {
-    console.warn('Availability could not be written to disk.', error)
-  }
+  writeState(newAvailability)
 
   // Send pushover notification
   if (newlyAvailableDates.length > 0) {
