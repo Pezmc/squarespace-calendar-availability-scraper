@@ -1,9 +1,12 @@
+# Node
 node_modules/
-sessions/
-.DS_Store
 nodemon
+
+# Config
 .env
-.state
+
+# State presistance
+.state/
 
 # Yarn
 .yarn/*
@@ -13,4 +16,7 @@ nodemon
 !.yarn/sdks
 !.yarn/versions
 yarn-error.log
+
+# Other
 *.sublime-workspace
+.DS_Store
