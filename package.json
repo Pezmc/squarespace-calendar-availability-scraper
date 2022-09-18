@@ -1,0 +1,20 @@
+{
+  "name": "SquareSpaceScraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Pez Cuckow <email@pezcuckow.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "dayjs": "^1.11.5",
+    "dotenv": "^16.0.2",
+    "pushover-notifications": "^1.2.2"
+  },
+  "volta": {
+    "node": "18.9.0",
+    "yarn": "1.22.19"
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1"
+  }
+}

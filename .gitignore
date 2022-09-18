@@ -1,0 +1,15 @@
+node_modules/
+sessions/
+.DS_Store
+nodemon
+.env
+
+# Yarn
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+yarn-error.log
+*.sublime-workspace
