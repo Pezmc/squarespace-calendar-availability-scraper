@@ -13,9 +13,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: volta-cli/action@v3
-      - run: yarn install
-      - env:
+      - name: Setup volta, node and yarn
+        uses: volta-cli/action@v3
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Download previous state artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: previous-state
+
+      - name: Run the script
+
+        env:
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
 
@@ -27,3 +37,10 @@ jobs:
           APPOINTMENT_TYPE: ${{ secrets.APPOINTMENT_TYPE }}
 
         run: yarn start
+
+      - name: Upload previous state artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: previous-state
+          path: PREVIOUS_STATE.json
+          retention-days: 7
