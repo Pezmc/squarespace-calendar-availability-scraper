@@ -1,8 +1,10 @@
 require('dotenv').config()
 
+const fs = require('fs')
+const path = require('path')
+
 const cheerio = require('cheerio')
 const dayjs = require('dayjs')
-const fs = require('fs')
 const Pushover = require('pushover-notifications')
 
 const requireEnvs = (names) => {
@@ -104,7 +106,11 @@ const loadState = () => {
 const writeState = (newAvailability) => {
   try {
     const fileName = process.env.STATE_FILE
-    fs.writeFileSync(fileName, JSON.stringify(newAvailability, null, 2))
+    const directory = path.dirname(fileName)
+    if (directory) {
+      fs.mkdirSync(directory, { recursive: true })
+    }
+    fs.writeFileSync(fileName, JSON.stringify(newAvailabilityTuples, null, 2))
     console.log(`Availability saved to ${fileName}.`)
   } catch (error) {
     console.warn('Availability could not be written to disk.', error)
