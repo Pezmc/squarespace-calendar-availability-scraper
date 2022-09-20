@@ -1,6 +1,6 @@
 {
   "name": "SquareSpaceScraper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "author": "Pez Cuckow <email@pezcuckow.com>",
   "main": "index.js",

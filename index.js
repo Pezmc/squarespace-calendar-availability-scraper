@@ -30,6 +30,14 @@ const pushover = new Pushover({
   token: process.env.PUSHOVER_TOKEN,
 })
 
+const availabilityByDate = (availabilityArray) => {
+  return new Map(
+    availabilityArray.map((day) => {
+      return [day.date, day.available]
+    }),
+  )
+}
+
 const getAvailability = async (type, date) => {
   const params = new URLSearchParams({
     appointmentType: [].concat(type),
@@ -67,7 +75,6 @@ const getAvailability = async (type, date) => {
       return {
         available: $el.is('.activeday'),
         date,
-        day: new Date(date).getDate(),
       }
     })
     .toArray()
@@ -97,44 +104,36 @@ const sendNotification = (message, title) => {
 
 const loadState = () => {
   try {
-    return JSON.parse(fs.readFileSync(process.env.STATE_FILE, { encoding: 'utf8', flag: 'r' }))
+    const rawState = fs.readFileSync(process.env.STATE_FILE, { encoding: 'utf8', flag: 'r' })
+    const stateObject = JSON.parse(rawState)
+    return new Map(Object.entries(stateObject))
   } catch (error) {
     console.warn('No saved state found, loading new availability')
   }
 }
 
 const writeState = (newAvailability) => {
+  const newAvailabilityObject = Object.fromEntries(newAvailability)
+
   try {
     const fileName = process.env.STATE_FILE
     const directory = path.dirname(fileName)
     if (directory) {
       fs.mkdirSync(directory, { recursive: true })
     }
-    fs.writeFileSync(fileName, JSON.stringify(newAvailabilityTuples, null, 2))
+    fs.writeFileSync(fileName, JSON.stringify(newAvailabilityObject, null, 2))
     console.log(`Availability saved to ${fileName}.`)
   } catch (error) {
     console.warn('Availability could not be written to disk.', error)
   }
 }
 
-const compareAvailability = (previousAvailabilities = [], newAvailabilities = []) => {
-  const previousByDate = new Map(
-    previousAvailabilities.map((day) => {
-      return [day.date, day.available]
-    }),
-  )
+const compareAvailability = (previousByDate = [], newByDate = []) => {
+  console.info('= Previous Availability')
+  console.info(previousByDate)
 
-  const newByDate = new Map(
-    newAvailabilities.map((day) => {
-      return [day.date, day.available]
-    }),
-  )
-
-  console.log('= Previous Availability')
-  console.log(previousByDate)
-
-  console.log('= New Availability')
-  console.log(newByDate)
+  console.info('= New Availability')
+  console.info(newByDate)
 
   const newlyAvailableDates = []
 
@@ -171,7 +170,7 @@ const main = async () => {
     'STATE_FILE',
   ])
 
-  const previousAvailability = loadState()
+  const previousAvailabilityByDate = loadState()
 
   const appointmentTypes = process.env.APPOINTMENT_TYPE.split(',')
   const newAvailability = [
@@ -181,11 +180,13 @@ const main = async () => {
     ...(await getAvailability(appointmentTypes, dayjs().add(3, 'month'))),
   ]
 
-  const newlyAvailableDates = compareAvailability(previousAvailability, newAvailability)
+  const newAvailabilityByDate = availabilityByDate(newAvailability)
 
-  console.log(`Newly available dates: ${newlyAvailableDates}`)
+  const newlyAvailableDates = compareAvailability(previousAvailabilityByDate, newAvailabilityByDate)
 
-  writeState(newAvailability)
+  console.log(`Newly available dates: ${newlyAvailableDates.length ? newlyAvailableDates : 'None'}`)
+
+  writeState(newAvailabilityByDate)
 
   // Send pushover notification
   if (newlyAvailableDates.length > 0) {
