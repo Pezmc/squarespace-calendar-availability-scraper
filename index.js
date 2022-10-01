@@ -152,7 +152,7 @@ const compareAvailability = (previousByDate = [], newByDate = []) => {
         }
       }
     } else {
-      console.log(`${previousDay.date} not found in new availability`)
+      console.log(`${previousDay} not found in new availability`)
     }
   }
 
