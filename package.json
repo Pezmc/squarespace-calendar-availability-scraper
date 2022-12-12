@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "dayjs": "^1.11.6",
+    "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "pushover-notifications": "^1.2.2"
   },
