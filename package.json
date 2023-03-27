@@ -14,7 +14,7 @@
     "pushover-notifications": "^1.2.2"
   },
   "devDependencies": {
-    "prettier": "^2.8.5"
+    "prettier": "^2.8.7"
   },
   "volta": {
     "node": "18.10.0",
