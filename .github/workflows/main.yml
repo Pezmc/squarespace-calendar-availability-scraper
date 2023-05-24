@@ -20,6 +20,8 @@ jobs:
 
       - name: Setup volta, node and yarn
         uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install
