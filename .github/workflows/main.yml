@@ -19,7 +19,7 @@ jobs:
         uses: jorgebg/stateful-action@v0.1
 
       - name: Setup volta, node and yarn
-        uses: volta-cli/action@v4
+        uses: actions/setup-node@v3
 
       - name: Install dependencies
         run: yarn install
