@@ -130,7 +130,7 @@ prettier@^3.1.1:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.1.1.tgz#6ba9f23165d690b6cbdaa88cb0807278f7019848"
   integrity sha512-22UbSzg8luF4UuZtzgiUOfcGM8s4tjBv6dJRT7j275NXsy2jb4aJa4NNveul5x4eqlF1wuhuR2RElK71RvmVaw==
 
-pushover-notifications@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/pushover-notifications/-/pushover-notifications-1.2.2.tgz#32bd13f862bade346fe84313b695d6c34b84d69c"
-  integrity sha512-+3Xcj+kiMiouZK1Ws8yGBTyl8WMPZZdELgl/iVxYqNwDdlaObBHMhEGPRC6Zb9t0BE27ikOoOqSIO1cKZOtsDA==
+pushover-notifications@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/pushover-notifications/-/pushover-notifications-1.2.3.tgz#89586e35355203d09db288ada0aa5eddb6d2972b"
+  integrity sha512-jVfniktfi8nYS5f1QsHs/fFAkzSaHYUcmn4CFOMMsv2wvvxvMgSJdjkdoRR0BqQU6uYs2QJs41PQhbqa1TkAIg==
